@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <h1>Welcome</h1>
+  <div class="container" >
+    <h1>Schedule remarkable posts with
+ <br> instant Auto hastags!!!</h1>
 </div>
 </template>
 
@@ -16,5 +17,10 @@ export default {
 li{
   text-decoration: none;
   display: inline-block;
+}
+h1{
+  text-align: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 </style>
