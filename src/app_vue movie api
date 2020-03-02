@@ -1,0 +1,57 @@
+<template>
+  <div id="app">
+  <div>
+    <div class="container">
+  <h1>Movies</h1>
+      <input type="text" v-model="searchKey">
+    <button @click="searchMovies">Search</button>
+    </div>
+       <br>
+    <ul>
+      <li v-for="item in moviesList.Search" :key="item.id">
+            <HelloWorld3 :movie="item"  />
+      </li>
+    </ul>
+  </div>
+  
+</div>
+</template>
+
+<script>
+import HelloWorld3 from './components/HelloWorld3.vue'
+// import axios from 'axios';
+
+export default {
+  name: 'app',
+  data () {
+    return {
+      searchKey: '',
+      moviesList: []
+    }
+  },
+  
+  components: {
+    HelloWorld3
+  },
+  methods: {
+    searchMovies(){
+      var url = 'http://www.omdbapi.com/?s='+this.searchKey+'&apikey=19662a8d';
+      fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        this.moviesList = data;
+      })
+    }
+    
+  }
+  
+ 
+}
+</script>
+
+<style>
+li{
+  text-decoration: none;
+  display: inline-block;
+}
+</style>

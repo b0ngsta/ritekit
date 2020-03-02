@@ -1,0 +1,115 @@
+<template>
+  <div id="app" >
+   <div v-on:scroll.passive="onScroll" 
+      :class="{ 'navbar--hidden': !showNavbar }" id="nav" class="navbar">
+     <img src="./assets/logo-black.png" alt="something" class="navbar-brand">
+      <div class="nom">
+        <li class="nav-itemo nom"><a href="#">Company</a></li>
+       <li class="nav-itemo"><a href="#" id="services" @mouseover="hover = true"
+      @mouseleave="hover = false">Services</a></li>
+       <li class="nav-itemo"><a href="#">Work</a></li>
+      </div>
+   </div>
+   <button style="float: right; position: fixed; margin-left: 45%;"
+   :class="{ 'btn--hidden': showNavbar }"
+   @click="navtoggle"
+    class="btn btn-success">Open
+   </button>
+   <div  v-show="hover" > 
+     <h1 style="text-align: center; margin-top: 30vh;">Hello</h1>
+   </div>
+
+  <HelloWorld2 style="margin-top: 50vh;"
+  @mouseover.native="hover = true"
+    @mouseleave.native="hover = false"
+   msg="Welcome to Your Vue.js App"/>
+    </div>
+
+</template>
+
+<script>
+import HelloWorld2 from './components/HelloWorld2.vue'
+
+
+export default {
+  name: 'app',
+  data () {
+    return {
+      showNavbar: true,
+      hover: false
+    }
+  },
+  components: {
+    HelloWorld2
+  },
+ mounted () {
+  window.addEventListener('scroll', this.onScroll)
+},
+beforeDestroy () {
+  window.removeEventListener('scroll', this.onScroll)
+},
+methods: {
+  onScroll () {
+  const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+  if (currentScrollPosition < 0) {
+    return
+  }
+  
+  this.showNavbar = currentScrollPosition < 20
+},
+navtoggle(){
+  this.showNavbar = true
+}
+}
+ 
+}
+</script>
+
+<style>
+#app{
+  height: 500vh;
+}
+.active {
+  background: green;
+}
+.navbar {
+  height: 100px;
+  width: 100vw;
+  position: fixed;
+  background: white;
+  box-shadow: 0 2px 15px rgba(71, 120, 120, 0.5);
+  transform: translate3d(0, 0, 0);
+  transition: 0.1s all ease-out;
+}
+.navbar.navbar--hidden {
+  opacity: 0;
+}
+.btn.btn--hidden {
+  opacity: 0;
+}
+.hoverable{
+  background: rgb(244, 244, 245);
+  height: 30vh;
+  width: 100vw;
+}
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+.nom{
+  margin-left: 70%;
+  
+}
+.nav-itemo{
+  margin: 20px;
+}
+li{
+  text-decoration: none;
+  display: inline;
+  
+}
+</style>

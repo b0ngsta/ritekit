@@ -1,0 +1,73 @@
+<template>
+  <div>
+    <div class="container" v-show="!unshow2">
+      <input type="text" v-model="searchKey">
+    <button class="btn btn-outline-success" @click="searchPosts">Search</button>
+    </div>
+    <div v-show="unshow2" class="alert alert-success" role="alert">
+      Post added to queue!
+    </div>
+    <div class="container">
+      <button @click="meto" class="btn btn-outline-info">Compose more</button>
+    </div>
+    <router-view></router-view>
+    <ul v-show="!unshow3">
+      <li v-for="item in postList" :key="item.id">
+          <HelloWorld3 style="position: fixed;" :post="postList.post"  />
+      </li>
+    </ul>
+</div>
+</template>
+
+<script>
+import HelloWorld3 from './HelloWorld3.vue'
+// import axios from 'axios';
+
+export default {
+  name: 'app',
+  data () {
+    return {
+      unshow2: false,
+      unshow3: false,
+      searchKey: '',
+      postList: []
+    }
+  },
+  components: {
+    HelloWorld3
+  },
+  methods: {
+    searchPosts(){
+      var arr = [];
+      // var url0 = 'https://api.ritekit.com/v1/emoji/suggestions?text='
+      var url0 = 'https://api.ritekit.com/v1/stats/auto-hashtag?post='
+      var res = this.searchKey.split(" ");
+      for(var i=0; i<= res.length-1; i++){
+      arr.push(res[i]);
+      }
+      for(var m=0; m< arr.length; m++){
+        url0 += arr[m] + '%20';
+      }
+      var url= url0+'&client_id=192b3d49f217992dc0483e4d4f502af119f29eba6653';
+      fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        this.postList = data;
+        this.unshow2 = true;
+        this.unshow3 = true;
+        this.searchKey = '';
+      })
+    },
+    meto() {
+      this.unshow2 = false;
+    }
+  }
+}
+</script>
+
+<style>
+li{
+  text-decoration: none;
+  display: inline-block;
+}
+</style>

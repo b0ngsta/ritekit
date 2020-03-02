@@ -1,0 +1,47 @@
+<template>
+  <div id="app">
+    <input type="text" v-model="filterText">
+    <ul>
+      <li v-for="fruit in filteredF" :key="fruit">
+        {{ fruit | tolow }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+// import demoGrid from './components/demoGrid.vue'
+// import axios from 'axios';
+
+export default {
+data () {
+    return {
+         fruits: ['Apple', 'Banana', 'Mango', 'Melon'],
+         filterText: ''
+        }
+
+},
+filters:{
+  tolow(value) {
+    return value.toLowerCase();
+  }
+},
+  computed: {
+    filteredF(){
+      var num = this.filterText;
+      return this.fruits.filter((elmnt) => {
+        return elmnt.match(num);
+      })
+    }
+  },
+components: {
+    // demoGrid
+  }
+
+ 
+}
+</script>
+
+<style>
+
+</style>
